@@ -17,18 +17,17 @@ class Book(models.Model):
         return self.title
     
     #Library Model
-    class Library(models.Model):
-        name = models.CharField(max_length=255)
-        books = models.ManyToManyField(Book)
+class Library(models.Model):
+    name = models.CharField(max_length=255)
+    books = models.ManyToManyField(Book)
         
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name
         
-        #Librarian Model
-        class Librarian(models.Model):
-            name = models.CharField(max_length=255)
-            library = models.OneToOneField(Library, on_delete=models.CASCADE)
+#Librarian Model
+class Librarian(models.Model):
+    name = models.CharField(max_length=255)
+    library = models.OneToOneField(Library, on_delete=models.CASCADE)
             
-            def __str__(self):
-                return self.name
-           
+    def __str__(self):
+        return self.name
