@@ -5,7 +5,7 @@ from .models import Library
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-
+from django.views.generic.detail import DetailView
 # Create your views here.
 def list_books(request):
     books = Book.objects.all()
