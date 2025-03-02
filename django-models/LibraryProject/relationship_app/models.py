@@ -39,3 +39,15 @@ class Librarian(models.Model):
             
     def __str__(self):
         return self.names
+
+class UserProfile(models.Model):
+    ROLE_CHOICE = [
+        ("Admin", "Admin"),
+        ("Librarian", "Librarian"),
+        ("Member", "Member"),
+    ]
+    user = models.OneToOneField(user, on_delete=models.CASCADE)
+    role = models.CharField(max_length=20, choices=ROLE_CHOICE)
+
+    def __str__(self):
+        return
