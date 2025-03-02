@@ -17,8 +17,8 @@ class Book(models.Model):
     class Meta:
         permissions = [
             ("can_add_book", "Can add a book"),
-            ("can_change_book", "Can edit a book"),
-            ("can_delete_book", "Can delete a book"),
+            ("can_change_book", "Can change book"),
+            ("can_delete_book", "Can delete book"),
         ]
         
     def __str__(self):
@@ -50,4 +50,4 @@ class UserProfile(models.Model):
     role = models.CharField(max_length=20, choices=ROLE_CHOICE)
 
     def __str__(self):
-        return
+        return f"{self.user.username} - {self.role}"
