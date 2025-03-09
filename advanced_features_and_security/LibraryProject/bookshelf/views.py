@@ -45,3 +45,9 @@ def book_edit(request, pk):
     else:
         form = BookForm(instance=book)
     return render(request, 'bookshelf/book_form.html', {'form': form})
+
+@csrf_protect
+def my_view(request):
+    if request.method == "POST":
+        # Handle the form submission securely
+        pass
