@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-@)=#blp1zy&7amadbo(wvqn+b(w*&_h=9g+2fd8^(dk41_r5-v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
@@ -38,7 +38,46 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'bookshelf.apps.BookshelfConfig',
+    'bookshelf'
+    'relationship_app'
 ]
+
+INSTALLED_APPS += ["csp"]
+
+MIDDLEWARE += [
+    "csp.middleware.CSPMiddleware",
+]
+
+CSP_DEFAULT_SRC = ["'self'"]  # Allow loading resources only from your domain
+CSP_SCRIPT_SRC = ["'self'", "https://trusted.cdn.com"]  # Allow trusted script sources
+CSP_STYLE_SRC = ["'self'", "https://trusted.styles.com"]  # Allow trusted CSS sources
+
+# Redirect all non-HTTPS requests to HTTPS
+SECURE_SSL_REDIRECT = True  
+
+# Enforce HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 31536000  # 1 year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True  # Apply HSTS to all subdomains
+SECURE_HSTS_PRELOAD = True  # Allow preloading HSTS for better security
+
+# Ensure session cookies are only sent over HTTPS
+SESSION_COOKIE_SECURE = True  
+
+# Ensure CSRF cookies are only sent over HTTPS
+CSRF_COOKIE_SECURE = True  
+
+# Prevent browsers from MIME-sniffing content
+SECURE_CONTENT_TYPE_NOSNIFF = True  
+
+# Enable browser-based XSS filtering
+SECURE_BROWSER_XSS_FILTER = True  
+
+# Prevent clickjacking attacks
+X_FRAME_OPTIONS = "DENY"  
+
+# Ensure Django detects HTTPS behind a proxy (e.g., Nginx, AWS ELB)
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -119,6 +158,15 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+
+
+SECURE_BROWSER_XSS_FILTER = True  # Prevents XSS attacks
+X_FRAME_OPTIONS = "DENY"  # Prevents clickjacking attacks
+SECURE_CONTENT_TYPE_NOSNIFF = True  # Prevents MIME type sniffing
+
+CSRF_COOKIE_SECURE = True  # Ensures CSRF cookie is only sent over HTTPS
+SESSION_COOKIE_SECURE = True  # Ensures session cookie is only sent over HTTPS
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
